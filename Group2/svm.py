@@ -1,10 +1,12 @@
 from sklearn import svm
+from sklearn import train_test_split
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import accuracy_score
 import pandas as pd
 import dataset
 
-x_train, x_test, y_train, y_test = dataset.get_dataset()
+df = dataset.get_dataset()
+x_train, x_test, y_train, y_test = train_test_split(df["images"], df["painters"], test_split=0.3 , random_state=0)
 
 tuned_parameters = [
     {'C': [1, 10, 100, 1000], 'kernel': ['linear']}
