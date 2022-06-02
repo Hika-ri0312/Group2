@@ -14,10 +14,10 @@ tuned_parameters = [
 
 score = 'f1'
 clf = GridSearchCV(
-    svm.LinearSVC(), # 識別器
-    tuned_parameters, # 最適化したいパラメータセット 
-    cv=5, # 交差検定の回数
-    scoring='%s_weighted' % score ) # モデルの評価関数の指定
+    svm.LinearSVC(), #識別器
+    tuned_parameters, #最適化したいパラメータセット 
+    cv=5, #交差検定の回数
+    scoring='%s_weighted' % score ) #モデルの評価関数の指定
 
 clf.fit(x_train, y_train)
 
