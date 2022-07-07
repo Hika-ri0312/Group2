@@ -3,10 +3,17 @@ from sklearn import metrics
 from sklearn.model_selection import train_test_split 
 from sklearn.model_selection import GridSearchCV #データ分割用,グリッドサーチ
 from sklearn.ensemble import RandomForestClassifier #ランダムフォレスト
+
+from sklearn.metrics import confusion_matrix
+import seaborn as sns
+import matplotlib.pyplot as plt
+import doctest
+
 import dataset
 
 # 学習用とテスト用データに分ける
 def randam_forest(x,y):
+    
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.30 , random_state=0)
     
     parameters = {
@@ -60,13 +67,34 @@ def randam_forest(x,y):
     
     print(len(x_train),len(y_train))
     
+    #テストデータを用いて予測値を算出
+    y_pred = model.predict(x_test)
+    
+    m = confusion_matrix(y_test,y_pred)
+    print(f'Confusion matrix:\n{m}')
+    
+    sns.heatmap(m,square = True, cbar = True, annot=True, cmap='Blues')
+    plt.savefig('image.jpg')
+    plt.show()
+    
+
+    
     
     
 def main():
+    '''
+    >>> x,y = dataset.load_dataset()
+    >>> type(x)
+    <class 'numpy.ndarray'>
+    >>> type(y)
+    <class 'numpy.ndarray'>
+    '''
     x,y = dataset.load_dataset()
+    
     randam_forest(x,y)
     
     
     
 if __name__ == '__main__':
     main()
+    doctest.testmod()
